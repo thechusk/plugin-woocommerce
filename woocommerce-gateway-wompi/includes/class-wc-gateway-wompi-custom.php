@@ -40,15 +40,21 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
     public function generate_wompi_widget( $order_id ) {
         $order = new WC_Order( $order_id );
 
+        $amount_in_cents = WC_Wompi_Helper::get_amount_in_cents( $order->get_total() );
+        $integrity_key =  WC_Wompi::$settings['testmode'] === 'yes' ? WC_Wompi::$settings['test_integrity_key'] : WC_Wompi::$settings['integrity_key'];
+        $currency = get_woocommerce_currency();
+        $signature = hash('sha256',  "{$order_id}{$amount_in_cents}{$currency}{$integrity_key}");
+
         $out = '';
         $out .= '<div class="wompi-button-holder">';
         $out .= '
             <script
                 src="https://checkout.wompi.co/widget.js"
                 data-render="button"
-                data-public-key="'.( WC_Wompi::$settings['testmode'] === 'yes' ? WC_Wompi::$settings['test_public_key'] : WC_Wompi::$settings['public_key'] ).'"
-                data-currency="'.get_woocommerce_currency().'"
-                data-amount-in-cents="'.WC_Wompi_Helper::get_amount_in_cents( $order->get_total() ).'"
+                data-signature:integrity="'. $signature .'"
+                data-public-key="'. ( WC_Wompi::$settings['testmode'] === 'yes' ? WC_Wompi::$settings['test_public_key'] : WC_Wompi::$settings['public_key'] ) .'"
+                data-currency="'. $currency .'"
+                data-amount-in-cents="'. $amount_in_cents .'"
                 data-reference="'.$order_id.'"
                 data-redirect-url="'.$order->get_checkout_order_received_url().'"
                 >
