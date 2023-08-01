@@ -16,6 +16,8 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
     public $event_secret_key;
     public static $supported_currency = false;
 
+    private $checkout_url = "https://checkout.wompi.co";
+
     /**
      * Init hooks
      */
@@ -41,28 +43,26 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
         $order = new WC_Order( $order_id );
 
         $amount_in_cents = WC_Wompi_Helper::get_amount_in_cents( $order->get_total() );
+        $public_key = WC_Wompi::$settings['testmode'] === 'yes' ? WC_Wompi::$settings['test_public_key'] : WC_Wompi::$settings['public_key'];
         $integrity_key =  WC_Wompi::$settings['testmode'] === 'yes' ? WC_Wompi::$settings['test_integrity_key'] : WC_Wompi::$settings['integrity_key'];
         $currency = get_woocommerce_currency();
         $signature = hash('sha256',  "{$order_id}{$amount_in_cents}{$currency}{$integrity_key}");
 
-        $out = '';
-        $out .= '<div class="wompi-button-holder">';
-        $out .= '
+        echo "
+        <div class='wompi-button-holder'>
             <script
-                src="https://checkout.wompi.co/widget.js"
-                data-render="button"
-                data-signature:integrity="'. $signature .'"
-                data-public-key="'. ( WC_Wompi::$settings['testmode'] === 'yes' ? WC_Wompi::$settings['test_public_key'] : WC_Wompi::$settings['public_key'] ) .'"
-                data-currency="'. $currency .'"
-                data-amount-in-cents="'. $amount_in_cents .'"
-                data-reference="'.$order_id.'"
-                data-redirect-url="'.$order->get_checkout_order_received_url().'"
+                src='{$this->checkout_url}/widget.js'
+                data-render='button'
+                data-signature:integrity='$signature'
+                data-public-key='$public_key'
+                data-currency='$currency'
+                data-amount-in-cents='$amount_in_cents'
+                data-reference='$order_id'
+                data-redirect-url='{$order->get_checkout_order_received_url()}'
                 >
             </script>
-        ';
-        $out .= '</div>';
-
-        echo $out;
+        </div>
+        ";
     }
 
     /**
