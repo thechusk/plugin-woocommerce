@@ -1,3 +1,6 @@
+# Docker
+.env
+
 #Libraries
 /woocommerce-gateway-wompi/vendor
 /woocommerce-gateway-wompi/wp-content
