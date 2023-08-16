@@ -59,6 +59,13 @@ return apply_filters(
 			'default'     => '',
 			'desc_tip'    => true,
 		),
+		'test_integrity_key' => array(
+			'title'       => __( 'Test Integrity Key', 'woocommerce-gateway-wompi' ),
+			'type'        => 'password',
+			'description' => __( 'Get your API keys from your Wompi account.', 'woocommerce-gateway-wompi' ),
+			'default'     => '',
+			'desc_tip'    => true,
+		),
 		'public_key' => array(
 			'title'       => __( 'Live Public Key', 'woocommerce-gateway-wompi' ),
 			'type'        => 'text',
@@ -75,6 +82,13 @@ return apply_filters(
 		),
 		'event_secret_key' => array(
 			'title'       => __( 'Live Event Private Key', 'woocommerce-gateway-wompi' ),
+			'type'        => 'password',
+			'description' => __( 'Get your API keys from your Wompi account.', 'woocommerce-gateway-wompi' ),
+			'default'     => '',
+			'desc_tip'    => true,
+		),
+		'integrity_key' => array(
+			'title'       => __( 'Live Integrity Key', 'woocommerce-gateway-wompi' ),
 			'type'        => 'password',
 			'description' => __( 'Get your API keys from your Wompi account.', 'woocommerce-gateway-wompi' ),
 			'default'     => '',

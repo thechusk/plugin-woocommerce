@@ -34,9 +34,11 @@ function _manually_load_plugin() {
 			"test_public_key" => "pub_test_XXXXXXXXXXXX",
 			"test_private_key" => "prv_test_XXXXXXXXXXXX",
 			"test_event_secret_key" => "test_events_XXXXXXXXXXXX",
+			"test_integrity_key" => "test_integrity_XXXXXXXXXXXX",
 			"public_key" => "pub_prod_XXXXXXXXXXXX",
 			"private_key" => "prv_prod_XXXXXXXXXXXX",
 			"event_secret_key" => "prod_events_XXXXXXXXXXXX",
+			"integrity_key" => "prod_integrity_XXXXXXXXXXXX",
 			"logging" => "yes",
 		];
 	});

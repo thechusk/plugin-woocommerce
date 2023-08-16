@@ -53,9 +53,11 @@ class WC_Wompi_Admin_Notices {
 		$test_pub_key       = isset( $options['test_public_key'] ) ? $options['test_public_key'] : '';
 		$test_secret_key    = isset( $options['test_private_key'] ) ? $options['test_private_key'] : '';
 		$test_event_secret_key    = isset( $options['test_event_secret_key'] ) ? $options['test_event_secret_key'] : '';
+		$test_integrity_key       = isset( $options['test_integrity_key'] ) ? $options['test_integrity_key'] : '';
 		$live_pub_key       = isset( $options['public_key'] ) ? $options['public_key'] : '';
 		$live_secret_key    = isset( $options['private_key'] ) ? $options['private_key'] : '';
-		$event_secret_key    = isset( $options['event_secret_key'] ) ? $options['event_secret_key'] : '';
+		$event_secret_key   = isset( $options['event_secret_key'] ) ? $options['event_secret_key'] : '';
+		$integrity_key      = isset( $options['integrity_key'] ) ? $options['integrity_key'] : '';
 
 		if ( isset( $options['enabled'] ) && 'yes' === $options['enabled'] ) {
 
@@ -70,6 +72,7 @@ class WC_Wompi_Admin_Notices {
                     empty( $test_pub_key ) ||
                     empty( $test_secret_key ) ||
                     empty( $test_event_secret_key ) ||
+                    empty( $test_integrity_key ) ||
                     empty( $supported_currency ) ) {
                     $this->add_admin_notice( 'wc_wompi', 'notice notice-error', sprintf( __( 'Wompi is in test mode however your test keys may not be valid. Please go to your settings and, <a href="%s">set your Wompi account keys</a>.', 'woocommerce-gateway-wompi' ), $setting_link ) );
                     $keys_valid = false;
@@ -79,6 +82,7 @@ class WC_Wompi_Admin_Notices {
                     empty( $live_pub_key ) ||
                     empty( $live_secret_key ) ||
                     empty( $event_secret_key ) ||
+                    empty( $integrity_key ) ||
                     empty( $supported_currency ) ) {
                     $this->add_admin_notice( 'wc_wompi', 'notice notice-error', sprintf( __( 'Wompi is in live mode however your live keys may not be valid. Please go to your settings and, <a href="%s">set your Wompi account keys</a>.', 'woocommerce-gateway-wompi' ), $setting_link ) );
                     $keys_valid = false;
